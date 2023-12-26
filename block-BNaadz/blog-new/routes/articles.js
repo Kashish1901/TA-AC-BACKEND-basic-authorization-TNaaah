@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Article = require("../models/Article");
 var Comment = require("../models/Comment");
-
+var auth = require("../middlewares/auth");
 router.get("/", async (req, res, next) => {
   try {
     var articles = await Article.find({});
@@ -12,19 +12,8 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/new", (req, res) => {
+router.get("/new", auth.loggedInUser, (req, res) => {
   res.render("addArticles.ejs");
-});
-
-router.post("/", async (req, res, next) => {
-  try {
-    req.body.tags = req.body.tags.trim().split(" ");
-    var article = await Article.create(req.body);
-    console.log(article);
-    res.redirect("/articles");
-  } catch (err) {
-    next(err);
-  }
 });
 
 router.get("/:id", async (req, res, next) => {
@@ -33,6 +22,18 @@ router.get("/:id", async (req, res, next) => {
     var article = await Article.findById(id);
     var comments = await Comment.find({ articleId: id });
     res.render("articleDetails.ejs", { article, comments });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.use(auth.loggedInUser);
+router.post("/", async (req, res, next) => {
+  try {
+    req.body.tags = req.body.tags.trim().split(" ");
+    var article = await Article.create(req.body);
+    console.log(article);
+    res.redirect("/articles");
   } catch (err) {
     next(err);
   }
