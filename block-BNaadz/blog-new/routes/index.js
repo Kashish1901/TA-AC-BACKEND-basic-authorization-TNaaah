@@ -7,10 +7,6 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/dashboard", (req, res) => {
-  if (req.session && req.session.Userid) {
-    res.redirect("/articles");
-  } else {
-    res.redirect("/users/login");
-  }
+  res.render("dashboard.ejs");
 });
 module.exports = router;
