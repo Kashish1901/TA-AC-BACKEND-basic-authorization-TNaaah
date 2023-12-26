@@ -20,7 +20,7 @@ router.post("/", async (req, res, next) => {
   try {
     req.body.tags = req.body.tags.trim().split(" ");
     var article = await Article.create(req.body);
-    res.redirect("/articles");
+    res.redirect("/articles", { article });
   } catch (err) {
     next(err);
   }

@@ -7,10 +7,10 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/dashboard", (req, res) => {
-  if (req.session && req.session.UserId) {
-    res.render("articles.ejs");
+  if (req.session && req.session.Userid) {
+    res.redirect("/articles");
   } else {
-    res.send("user not loggedIn");
+    res.redirect("/users/login");
   }
 });
 module.exports = router;
