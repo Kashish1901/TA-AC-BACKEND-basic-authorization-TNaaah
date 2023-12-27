@@ -3,6 +3,7 @@ var router = express.Router();
 var Article = require("../models/Article");
 var Comment = require("../models/Comment");
 var auth = require("../middlewares/auth");
+
 router.get("/", async (req, res, next) => {
   try {
     var articles = await Article.find({});
@@ -26,7 +27,6 @@ router.get("/:id", async (req, res, next) => {
     next(err);
   }
 });
-
 router.use(auth.loggedInUser);
 router.post("/", async (req, res, next) => {
   try {

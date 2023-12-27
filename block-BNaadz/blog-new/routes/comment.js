@@ -2,7 +2,8 @@ var express = require("express");
 var router = express.Router();
 
 var Comment = require("../models/Comment");
-
+var auth = require("../middlewares/auth");
+router.use(auth.loggedInUser);
 router.get("/:id/edit", async (req, res, next) => {
   try {
     var id = req.params.id;
