@@ -10,6 +10,7 @@ var session = require("express-session");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var articlesRouter = require("./routes/articles");
+var auth = require("./middlewares/auth");
 
 mongoose
   .connect("mongodb://127.0.0.1:27017/blog-new")
@@ -39,6 +40,8 @@ app.use(
   })
 );
 app.use(flash());
+
+app.use(auth.userInfo);
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);

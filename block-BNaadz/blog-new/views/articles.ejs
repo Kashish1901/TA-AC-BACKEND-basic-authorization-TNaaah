@@ -7,6 +7,24 @@
   </head>
   <body style="text-align: center">
     <%- include('partials/header') -%>
+    <div
+      style="display: flex; justify-content: flex-end; align-items: flex-end"
+    >
+      <button
+        style="
+          background-color: green;
+          color: white;
+          padding: 10px;
+          font-size: 20px;
+          border-radius: 4px;
+          margin-top: 20px;
+        "
+      >
+        <a style="text-decoration: none; color: white" href="/articles/new">
+          Add Articles
+        </a>
+      </button>
+    </div>
     <h1 style="text-align: center; color: black">All Articles List</h1>
     <% articles.forEach((article) => { %>
     <a href="/articles/<%= article.id %>">
